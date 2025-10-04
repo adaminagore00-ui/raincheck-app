@@ -1,0 +1,41 @@
+name: Build RainCheck App
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 20
+
+    - name: Install dependencies and build frontend
+      run: |
+        cd frontend
+        npm install
+        npm run build
+        cd ..
+
+    - name: Build Electron App
+      run: |
+        cd electron
+        npm install
+        npx electron-builder --win --x64
+        cd ..
+
+    - name: Upload EXE
+      uses: actions/upload-artifact@v3
+      with:
+       name: RainCheck-Windows
+        path: electron/dist/*.exe
+        name: RainCheck-Windows
+        path: electron/dist/*.exe
