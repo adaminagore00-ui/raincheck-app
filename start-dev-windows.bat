@@ -1,0 +1,2 @@
+\
+@echo off\nREM Start backend in a new window\nstart cmd /k "cd backend && .venv\Scripts\activate && uvicorn app.main:app --reload --port 8000"\nREM Start frontend dev server in a new window\nstart cmd /k "cd frontend && npm install && npm run dev"\nREM Start electron (dev) in this window\ncd electron\nnpm install\nnpm run start\n
